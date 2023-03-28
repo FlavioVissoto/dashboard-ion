@@ -1,13 +1,19 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Login, NotFound } from '../pages';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-export const AppRoutes = () => {
+import { RouterTitle } from '../types';
+import { PagesRoutes } from './pagesData';
+
+export const RouterApp = () => {
+  const pageRoutes: JSX.Element[] = Object.keys(PagesRoutes).map((title: string) => {
+    const el = PagesRoutes[title as RouterTitle];
+    return <Route path={el.path} element={el.element} key={title} />;
+  });
+
+  console.log(PagesRoutes);
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <Routes>{pageRoutes}</Routes>
     </BrowserRouter>
   );
 };
